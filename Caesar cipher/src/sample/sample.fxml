@@ -1,8 +1,32 @@
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<GridPane fx:controller="sample.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-</GridPane>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0"
+            prefWidth="750.0" style="-fx-background-color: #4682B4;" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <AnchorPane layoutY="81.0" prefHeight="369.0" prefWidth="750.0" style="-fx-background-color: #fafafa;">
+        <TextArea fx:id="text" layoutX="13.0" layoutY="130.0" prefHeight="225.0" prefWidth="726.0"/>
+        <Button fx:id="open" mnemonicParsing="false" prefHeight="36.0" prefWidth="99.0" text="Open file"/>
+        <Button fx:id="encrypt" layoutX="245.0" layoutY="89.0" mnemonicParsing="false" text="encrypt"/>
+        <Button fx:id="decrypt" layoutX="450.0" layoutY="89.0" mnemonicParsing="false" text="decrypt"/>
+        <Label layoutX="365.0" layoutY="27.0" text="KEY">
+            <font>
+                <Font name="System Bold" size="12.0"/>
+            </font>
+        </Label>
+        <TextField fx:id="keyField" layoutX="301.0" layoutY="52.0" promptText="enter your key here"/>
+        <Button fx:id="save" layoutX="651.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="99.0"
+                text="Save file"/>
+    </AnchorPane>
+    <Label layoutX="289.0" layoutY="27.0" prefHeight="36.0" prefWidth="173.0" text="Caesar cipher" textFill="WHITE">
+        <font>
+          <Font name="Lucida Bright Demibold" size="24.0"/>
+        </font>
+    </Label>
+</AnchorPane>
