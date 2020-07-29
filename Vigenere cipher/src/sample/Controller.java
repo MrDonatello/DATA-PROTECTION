@@ -11,7 +11,8 @@ import java.io.*;
 
 public class Controller {
 
-    private static String alphabet = "!@#$%^&*()`_+{}:|/<>№;%*-=+~?., abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+    //private static String alphabet = "!@#$%^&*()`_+{}:|/<>№;%*-=+~?., abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+    private static String alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
     private static String keyString;
     private static String message;
     private int index;
@@ -32,7 +33,7 @@ public class Controller {
     void initialize() {
         encrypt.setOnAction(event -> {
             StringBuilder encode = new StringBuilder();
-            message = text.getText();
+            message = text.getText().toLowerCase();
             keyString = keyField.getText();
             index = 0;
             if (keyString.length() != 0) {
@@ -59,7 +60,7 @@ public class Controller {
                     if (index == keyString.toCharArray().length) {
                         index = 0;
                     }
-                    decode.append(alphabet.charAt(((alphabet.indexOf(symbol) + 160) - alphabet.indexOf(keyString.charAt(index))) % alphabet.length()));
+                    decode.append(alphabet.charAt(((alphabet.indexOf(symbol) + alphabet.length()) - alphabet.indexOf(keyString.charAt(index))) % alphabet.length()));
                     index++;
                 }
                 text.setText(decode.toString());
