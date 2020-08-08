@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -12,6 +14,7 @@ public class Controller {
     private static String keyString;
     private static String message;
     private Key key = new Key(alphabet);
+    private int index;
 
     @FXML
     private TextArea text;
@@ -20,30 +23,32 @@ public class Controller {
     private Button selection;
 
     @FXML
-    private ChoiceBox keyChoiceBox;
+    private ChoiceBox<String> keyChoiceBox;
 
     @FXML
     void initialize() {
         selection.setOnAction(event -> {
-            StringBuilder encode = new StringBuilder();
             message = text.getText();
+            keyString = key.getKey(message);
+            ObservableList<String> keyItems = FXCollections.observableArrayList(keyString);
+            keyChoiceBox.setItems(keyItems);
 
-            String keyString = key.getKey(message);
-            System.out.println("key length is " + keyString);
-           /* keyString = keyField.getText();
-            index = 0;
-            if (keyString.length() != 0) {
-                for (char symbol : message.toCharArray()) {
-                    if (index == keyString.toCharArray().length) {
-                        index = 0;
+            keyChoiceBox.setOnAction(event1 -> {
+                StringBuilder decode = new StringBuilder();
+                index = 0;
+                if (keyString.length() != 0) {
+                    for (char symbol : message.toCharArray()) {
+                        if (index == keyString.toCharArray().length) {
+                            index = 0;
+                        }
+                        decode.append(alphabet.charAt(((alphabet.indexOf(symbol) + alphabet.length()) - alphabet.indexOf(keyString.charAt(index))) % alphabet.length()));
+                        index++;
                     }
-                    encode.append(alphabet.charAt((alphabet.indexOf(symbol) + alphabet.indexOf(keyString.charAt(index))) % alphabet.length()));
-                    index++;
+                    text.setText(decode.toString());
+                } else {
+                    alert();
                 }
-                text.setText(encode.toString());
-            } else {
-                alert();
-            }*/
+            });
         });
     }
 
