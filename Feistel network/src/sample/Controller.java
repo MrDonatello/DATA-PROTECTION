@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 public class Controller {
     private static String keyString;
     private static String message;
-    private final int sizeOfBlock = 128; // размер блока 128 бит
+    private final int sizeOfBlock = 128; // размер блока бит
     private final int sizeOfChar = 16; //размер одного символа (in Unicode 16 bit)
     private final int shiftKey = 2; //сдвиг ключа
     private final int quantityOfRounds = 16; //количество раундов
@@ -37,7 +37,7 @@ public class Controller {
             StringBuilder result = new StringBuilder();
             message = text.getText();
             keyString = keyField.getText();
-            if (keyString.length() > 0) {//&& keyString.matches("[-+]?\\d+") && keyString.length() < 19) {
+            if (keyString.length() > 0) {
                 message = stringToRightLength(message);
                 cutStringIntoBlocks(message);
                 keyString = correctKeyWord(keyString, message.length() / (2 * blocks.length));
@@ -49,12 +49,11 @@ public class Controller {
                     keyString = keyToNextRound(keyString);
                 }
                 keyString = keyToPrevRound(keyString);
-
+                keyField.setText(stringFromBinaryToNormalFormat(keyString));
                 for (String block : blocks) {
                     result.append(block);
                 }
-                String result1 = stringFromBinaryToNormalFormat(result.toString());
-                text.setText(result1);
+                text.setText(stringFromBinaryToNormalFormat(result.toString()));
             } else {
                 alert();
             }
@@ -63,9 +62,8 @@ public class Controller {
         decrypt.setOnAction(event -> {
             StringBuilder result = new StringBuilder();
             message = text.getText();
-            keyString = keyField.getText();
-            if (keyString.length() > 0) {// && keyString.matches("[-+]?\\d+") && keyString.length() < 19) {
-                keyString = stringToBinaryFormat(keyString);
+            keyString = stringToBinaryFormat(keyField.getText());
+            if (keyString.length() > 0) {
                 message = stringToBinaryFormat(message);
                 cutBinaryStringIntoBlocks(message);
                 for (int i = 0; i < quantityOfRounds; i++) {
@@ -74,7 +72,12 @@ public class Controller {
                     }
                     keyString = keyToPrevRound(keyString);
                 }
-
+                keyString = keyToNextRound(keyString);
+                keyField.setText(stringFromBinaryToNormalFormat(keyString));
+                for (String block : blocks) {
+                    result.append(block);
+                }
+                text.setText(stringFromBinaryToNormalFormat(result.toString()));
             } else {
                 alert();
             }
@@ -93,7 +96,6 @@ public class Controller {
     //Метод, разбивающий строку в обычном (символьном) формате на блоки
     private void cutStringIntoBlocks(String input) {
         blocks = new String[(input.length() * sizeOfChar) / sizeOfBlock];
-        System.out.println(blocks.length);
         int lengthOfBlock = input.length() / blocks.length;
         for (int i = 0; i < blocks.length; i++) {
             blocks[i] = input.substring(i * lengthOfBlock, i * lengthOfBlock + lengthOfBlock);
@@ -106,7 +108,7 @@ public class Controller {
         blocks = new String[input.length() / sizeOfBlock];
         int lengthOfBlock = input.length() / blocks.length;
         for (int i = 0; i < blocks.length; i++) {
-            blocks[i] = input.substring(i * lengthOfBlock, lengthOfBlock);
+            blocks[i] = input.substring(i * lengthOfBlock, i * lengthOfBlock + lengthOfBlock);
         }
     }
 
@@ -143,7 +145,7 @@ public class Controller {
     //Один раунд расшифровки
     private String decodeOneRound(String input, String key) {
         String L = input.substring(0, input.length() / 2);
-        String R = input.substring(input.length() / 2, input.length() / 2);
+        String R = input.substring(input.length() / 2);
         return (xor(f(L, key), R) + L);
     }
 
@@ -175,16 +177,24 @@ public class Controller {
         return key;
     }
 
+    private String keyToQuantityRound(String key) {
+        StringBuilder keyBuilder = new StringBuilder(key);
+        for (int i = 0; i < quantityOfRounds * shiftKey; i++) {
+            keyBuilder.insert(0, keyBuilder.charAt(keyBuilder.length() - 1));
+            keyBuilder.deleteCharAt(keyBuilder.length() - 1);
+        }
+        key = keyBuilder.toString();
+        return key;
+    }
+
     //Вычисление ключа для следующего раунда расшифровки. циклический сдвиг << shiftKey.
     private String keyToPrevRound(String key) {
         StringBuilder keyBuilder = new StringBuilder(key);
-
         for (int i = 0; i < shiftKey; i++) {
             keyBuilder.append(keyBuilder.charAt(0));
             keyBuilder.delete(0, 1);
         }
         key = keyBuilder.toString();
-
         return key;
     }
 
@@ -195,12 +205,7 @@ public class Controller {
         while (inputStringBuilder.length() > 0) {
             String charBinary = inputStringBuilder.substring(0, sizeOfChar);
             inputStringBuilder.delete(0, sizeOfChar);
-            int a = 0;
-            int degree = charBinary.length() - 1;
-            for (char c : charBinary.toCharArray()) {
-                a += c * (int) Math.pow(2, degree--);
-            }
-            output.append(((char) a));
+            output.append(((char) Integer.parseInt(charBinary, 2)));
         }
         return output.toString();
     }
@@ -241,7 +246,7 @@ public class Controller {
     private void alert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Error");
-        alert.setHeaderText("The key field cannot be empty and must only contain numbers");
+        alert.setHeaderText("The key field cannot be empty");
         alert.setContentText("Enter the key");
         alert.showAndWait();
     }
