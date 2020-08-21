@@ -13,26 +13,27 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #4682B4;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <AnchorPane layoutY="72.0" prefHeight="328.0" prefWidth="700.0" style="-fx-background-color: #fafafa;">
-         <children>
-            <TextArea fx:id="text" layoutX="20.0" layoutY="98.0" prefHeight="200.0" prefWidth="662.0" wrapText="true">
-               <cursor>
-                  <Cursor fx:constant="TEXT" />
-               </cursor>
-            </TextArea>
-            <Button fx:id="encrypt" layoutX="235.0" layoutY="57.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="encrypt" />
-            <TextField fx:id="keyField" layoutX="276.0" layoutY="23.0" promptText="enter your key here" />
-            <Label layoutX="334.0" layoutY="6.0" text="KEY">
-               <font>
-                  <Font name="Verdana" size="12.0" />
-               </font></Label>
-            <MenuButton fx:id="file" mnemonicParsing="false" text="File">
-              <items>
-                <MenuItem fx:id="Open" mnemonicParsing="false" onAction="#open" text="Open..." />
-                  <MenuItem fx:id="Save" mnemonicParsing="false" onAction="#save" text="Save As...." />
-              </items>
-            </MenuButton>
-            <Button fx:id="decrypt" layoutX="359.0" layoutY="57.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="decrypt" />
-         </children>
+         <TextArea fx:id="text" layoutX="20.0" layoutY="98.0" prefHeight="200.0" prefWidth="662.0" wrapText="true">
+            <cursor>
+               <Cursor fx:constant="TEXT"/>
+            </cursor>
+         </TextArea>
+         <Button fx:id="encrypt" layoutX="235.0" layoutY="57.0" mnemonicParsing="false" prefHeight="25.0"
+                 prefWidth="82.0" text="encrypt"/>
+         <TextField fx:id="keyField" layoutX="276.0" layoutY="23.0" promptText="enter your key here"/>
+         <Label layoutX="334.0" layoutY="6.0" text="KEY">
+            <font>
+               <Font name="Verdana" size="12.0"/>
+            </font>
+         </Label>
+         <MenuButton fx:id="file" mnemonicParsing="false" text="File">
+            <items>
+               <MenuItem fx:id="Open" mnemonicParsing="false" onAction="#open" text="Open..."/>
+               <MenuItem fx:id="Save" mnemonicParsing="false" onAction="#save" text="Save As...."/>
+            </items>
+         </MenuButton>
+         <Button fx:id="decrypt" layoutX="359.0" layoutY="57.0" mnemonicParsing="false" prefHeight="25.0"
+                 prefWidth="82.0" text="decrypt"/>
       </AnchorPane>
       <Label layoutX="256.0" layoutY="30.0" text="Feistel network" textFill="WHITE">
          <font>
