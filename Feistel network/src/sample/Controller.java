@@ -177,16 +177,6 @@ public class Controller {
         return key;
     }
 
-    private String keyToQuantityRound(String key) {
-        StringBuilder keyBuilder = new StringBuilder(key);
-        for (int i = 0; i < quantityOfRounds * shiftKey; i++) {
-            keyBuilder.insert(0, keyBuilder.charAt(keyBuilder.length() - 1));
-            keyBuilder.deleteCharAt(keyBuilder.length() - 1);
-        }
-        key = keyBuilder.toString();
-        return key;
-    }
-
     //Вычисление ключа для следующего раунда расшифровки. циклический сдвиг << shiftKey.
     private String keyToPrevRound(String key) {
         StringBuilder keyBuilder = new StringBuilder(key);

@@ -88,8 +88,8 @@ public class Controller {
     private void alert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Error");
-        alert.setHeaderText("");
-        alert.setContentText("");
+        alert.setHeaderText("key length error");
+        alert.setContentText("key length error");
         alert.showAndWait();
     }
 }

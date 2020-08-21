@@ -103,6 +103,4 @@ public class Controller {
         alert.setContentText("Enter the key");
         alert.showAndWait();
     }
-
-
 }
